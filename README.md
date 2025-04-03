@@ -4,7 +4,7 @@ Final project for [yet-another-js-course] automation course using Playwright (ht
 ## Setup
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/k335x/playwright-project
+   git clone https://github.com/k335x/PW-FINAL-PROJ
    ```
 2. **Install dependencies**
    ```bash

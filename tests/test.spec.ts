@@ -36,7 +36,7 @@ test('[Test 3] Verify user can add product to cart', async ({ page }) => {
     await page.locator('[data-test="nav-cart"]').click();
     await expect(page).toHaveURL('/checkout');
     await expect(page.locator('[data-test="product-quantity"]')).toBeVisible();
-    await expect(page.locator('tbody')).toContainText('1');
+    await expect(page.locator('[data-test="product-quantity"]')).toHaveValue('1');
     await expect(page.getByRole('cell', { name: 'Slip Joint Pliers', exact: true })).toBeVisible();
     await expect(page.locator('[data-test="proceed-1"]')).toBeVisible();
 });
