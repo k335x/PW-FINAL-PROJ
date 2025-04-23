@@ -8,6 +8,9 @@ export class ProductPage {
     cartQuantity: Locator;
     productQuantity: Locator;
     buttonProceedToCheckout: Locator;
+    alertMessage: Locator;
+    alertLocator: Locator;
+    navCartLink: Locator;
     constructor(page:Page) {
         this.page = page;
         this.productPrice = this.page.locator('[data-test="unit-price"]');
@@ -16,45 +19,48 @@ export class ProductPage {
         this.cartQuantity = this.page.locator('[data-test="cart-quantity"]');
         this.productQuantity = this.page.locator('[data-test="product-quantity"]');
         this.buttonProceedToCheckout = this.page.locator('[data-test="proceed-1"]');
+        this.alertMessage = this.page.getByRole('alert', { name: 'Product added to shopping' });
+        this.alertLocator = this.page.locator('#alert');
+        this.navCartLink = page.locator('[data-test="nav-cart"]');
     }
 
-    async checkPriceForCombinationPliers(expectedPrice: string) {
-        await expect(this.productPrice).toContainText(expectedPrice);
+    checkPriceForProducts() {
+        return this.productPrice;
     }
 
-    async checkPriceForSlipJointPliers (expectedPrice: string) {
-        await expect(this.productPrice).toContainText(expectedPrice);
-    }
-
-    async clickAddToFavorites () {
-        await expect(this.buttonAddToFavorites).toBeVisible();
+    async clickAddToFavorites() {
+        await this.buttonAddToFavorites.waitFor({ state: 'visible' });
         await this.buttonAddToFavorites.click();
     }
 
-    async clickAddToCart () {
-        await expect(this.buttonAddToCart).toBeVisible();
+    async clickAddToCart() {
+        await this.buttonAddToCart.waitFor({ state: 'visible' });
         await this.buttonAddToCart.click();
     }
 
-    async expectAddToCartAlert() {
-        await expect(this.page.getByRole('alert', { name: 'Product added to shopping' })).toBeVisible();
-        await expect(this.page.locator('#alert')).toBeHidden({ timeout: 8000 });
+
+    async waitForAddToCartAlert() {
+        await this.alertMessage.waitFor({ state: 'visible' });
+        await this.alertLocator.waitFor({ state: 'hidden', timeout: 8000 });
     }
 
-    async checkCartQuantity(number: string) {
-        await expect(this.cartQuantity).toContainText(number);
+    getCartQuantityLocator(): Locator {
+        return this.cartQuantity;
     }
 
-    async checkProductQuantityInCheckout(expectedQuantity: string) {
-        await expect(this.productQuantity).toBeVisible();
-        await expect(this.productQuantity).toHaveValue(expectedQuantity);
+    getProductQuantityLocator(): Locator {
+        return this.productQuantity;
     }
 
-    checkProductNameInCheckout(name: string) {
+    getProductInCheckout(name: string) {
         return this.page.getByRole('cell', { name, exact: true });
     }
 
-    async checkButtonProceedToCheckout() {
-        await expect(this.buttonProceedToCheckout).toBeVisible();
+    getProceedToCheckoutButton(): Locator {
+        return this.buttonProceedToCheckout;
+    }
+
+    async goToCart(){
+        await this.navCartLink.click();
     }
 }

@@ -15,9 +15,9 @@ export class ProductsFiltersFragment {
 
     constructor(page: Page) {
         this.page = page;
-        this.sortDropdown = page.locator('[data-test="sort"]');
-        this.productTitles = page.locator('[data-test="product-name"]');
-        this.productPrices = page.locator('[data-test="unit-price"]');
+        this.sortDropdown = page.getByTestId('sort');
+        this.productTitles = page.getByTestId('product-name');
+        this.productPrices = page.getByTestId('unit-price');
     }
 
     async selectSortOption(option: string) {
@@ -25,7 +25,7 @@ export class ProductsFiltersFragment {
     }
 
     async getProductPrices(): Promise<number[]> {
-        const texts = await this.page.locator('[data-test="unit-price"]').allInnerTexts();
+        const texts = await this.productPrices.allInnerTexts();
         return texts.map((text) => parseFloat(text.replace('$', '').trim()));
     }
 
@@ -38,20 +38,10 @@ export class ProductsFiltersFragment {
     }
 
     async getProductNames(): Promise<string[]> {
-        return this.page.locator('[data-test="product-name"]').allInnerTexts();
+        return this.productTitles.allInnerTexts();
     }
 
-    sortNames(values: string[], order: 'asc' | 'desc'): string[] {
-        const sorted = [...values];
-        return order === 'asc'
-            ? sorted.sort((a, b) => a.localeCompare(b))
-            : sorted.sort((a, b) => b.localeCompare(a));
-    }
-
-    sortPrices(values: number[], order: 'asc' | 'desc'): number[] {
-        const sorted = [...values];
-        return order === 'asc'
-            ? sorted.sort((a, b) => a - b)
-            : sorted.sort((a, b) => b - a);
+    async clickProductCardByName(productName: string) {
+        await this.productTitles.filter({ hasText: productName }).click();
     }
 }

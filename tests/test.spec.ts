@@ -3,6 +3,7 @@ import 'dotenv/config';
 import {LoginPage} from "../pages/loginPage";
 import {HomePage} from "../pages/homePage";
 import {ProductPage} from "../pages/productPage";
+import { ProductsFiltersFragment } from '../pages/ProductsFiltersFragment';
 
 test('[Test1] Verify login with valid credentials', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -12,40 +13,40 @@ test('[Test1] Verify login with valid credentials', async ({ page }) => {
     await loginPage.login( process.env.USER_EMAIL!, process.env.USER_PASSWORD!);
 
     await expect(page).toHaveURL('/account');
-    await homePage.checkPageTitle('My account');
-    await homePage.checkNameInMenu(process.env.USER_NAME!);
+    await expect(homePage.getPageTitleLocator()).toContainText('My account');
+    await expect(homePage.getNameInMenuLocator()).toContainText(process.env.USER_NAME!);
 });
 test('[Test 2] Verify user can view product details', async ({ page }) => {
-    const homePage = new HomePage(page);
     const productPage = new ProductPage(page);
+    const productsFiltersFragment = new ProductsFiltersFragment(page);
 
     await page.goto('/');
 
-    await homePage.clickProductCardCombinationPliers('Combination Pliers');
+    await productsFiltersFragment.clickProductCardByName('Combination Pliers');
     await expect(page).toHaveURL(/.*product.*/);
 
-    await productPage.checkPriceForCombinationPliers('14.15');
+    await expect(productPage.checkPriceForProducts()).toContainText('14.15')
     await productPage.clickAddToFavorites();
     await productPage.clickAddToCart();
 });
 test('[Test 3] Verify user can add product to cart', async ({ page }) => {
-    const homePage = new HomePage(page);
     const productPage = new ProductPage(page);
+    const productsFiltersFragment = new ProductsFiltersFragment(page);
 
-    await page.goto('https://practicesoftwaretesting.com');
-    await homePage.clickProductCardSlipJointPliers('Slip Joint Pliers');
+    await page.goto('/');
+    await productsFiltersFragment.clickProductCardByName('Slip Joint Pliers');
     await expect(page).toHaveURL(/.*product.*/);
-    await productPage.checkPriceForSlipJointPliers('9.17');
+    await expect(productPage.checkPriceForProducts()).toContainText('9.17');
     await productPage.clickAddToCart();
-    await productPage.expectAddToCartAlert();
+    await productPage.waitForAddToCartAlert();
 
-    await productPage.checkCartQuantity('1');
+    await expect(productPage.getCartQuantityLocator()).toContainText('1');
 
-    await page.locator('[data-test="nav-cart"]').click();
+    await productPage.goToCart();
     await expect(page).toHaveURL(/.*checkout.*/);
 
-    await productPage.checkProductQuantityInCheckout('1');
+    await expect(productPage.getProductQuantityLocator()).toHaveValue('1');
 
-    await expect(productPage.checkProductNameInCheckout('Slip Joint Pliers')).toBeVisible();
-    await productPage.checkButtonProceedToCheckout();
+    await expect(productPage.getProductInCheckout('Slip Joint Pliers')).toBeVisible();
+    await expect(productPage.getProceedToCheckoutButton()).toBeVisible();
 });

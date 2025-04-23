@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config';
 import { ProductsFiltersFragment, Category } from '../pages/ProductsFiltersFragment';
+import { sortNames, sortPrices } from '../helpers/sortUtils';
 
 const sortCases = [
     { option: 'name,asc', description: 'A - Z' },
@@ -11,11 +12,12 @@ for (const { option, description } of sortCases) {
     test(`Verify sorting by Name (${description})`, async ({ page }) => {
         const filters = new ProductsFiltersFragment(page);
         await page.goto('/');
+        await filters.selectSortOption(option);
 
-        await filters.selectSortOption('name,asc');
         const names = await filters.getProductNames();
-        const expected = filters.sortNames(names, 'asc');
-        expect(names).toEqual(expected);
+
+        const order = option.split(',')[1] as 'asc' | 'desc';
+        const expected = sortNames(names, order);
 
         expect(names).toEqual(expected);
     });
@@ -33,8 +35,8 @@ for (const { option, description } of priceSortCases) {
 
         await filters.selectSortOption('price,desc');
         const prices = await filters.getProductPrices();
-        const expected = filters.sortPrices(prices, 'desc');
-        expect(prices).toEqual(expected);
+        const expected = sortPrices(prices, 'desc');
+
 
         expect(prices).toEqual(expected);
     });
