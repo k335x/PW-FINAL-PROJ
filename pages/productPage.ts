@@ -18,13 +18,11 @@ export class ProductPage {
         this.buttonProceedToCheckout = this.page.locator('[data-test="proceed-1"]');
     }
 
-    async checkPriceForCombinationPliers() {
-        const expectedPrice = '14.15';
+    async checkPriceForCombinationPliers(expectedPrice: string) {
         await expect(this.productPrice).toContainText(expectedPrice);
     }
 
-    async checkPriceForSlipJointPliers () {
-        const expectedPrice = '9.17';
+    async checkPriceForSlipJointPliers (expectedPrice: string) {
         await expect(this.productPrice).toContainText(expectedPrice);
     }
 
@@ -43,18 +41,17 @@ export class ProductPage {
         await expect(this.page.locator('#alert')).toBeHidden({ timeout: 8000 });
     }
 
-    async checkCartQuantity() {
-        const number = '1';
+    async checkCartQuantity(number: string) {
         await expect(this.cartQuantity).toContainText(number);
     }
 
-    async checkProductQuantityInCheckout() {
+    async checkProductQuantityInCheckout(expectedQuantity: string) {
         await expect(this.productQuantity).toBeVisible();
-        await expect(this.productQuantity).toHaveValue('1');
+        await expect(this.productQuantity).toHaveValue(expectedQuantity);
     }
 
-    async checkProductNameInCheckout() {
-        await expect(this.page.getByRole('cell', { name: 'Slip Joint Pliers', exact: true })).toBeVisible();
+    checkProductNameInCheckout(name: string) {
+        return this.page.getByRole('cell', { name, exact: true });
     }
 
     async checkButtonProceedToCheckout() {

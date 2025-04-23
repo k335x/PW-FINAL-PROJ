@@ -1,60 +1,49 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config';
-import { ProductsFiltersFragment } from '../pages/ProductsFiltersFragment';
+import { ProductsFiltersFragment, Category } from '../pages/ProductsFiltersFragment';
 
-test('Verify sorting by Name (A - Z)', async ({ page }) => {
-    const productsFiltersFragment = new ProductsFiltersFragment(page);
-    await page.goto('/');
+const sortCases = [
+    { option: 'name,asc', description: 'A - Z' },
+    { option: 'name,desc', description: 'Z - A' },
+];
 
-    await productsFiltersFragment.selectSortOption('name,asc');
+for (const { option, description } of sortCases) {
+    test(`Verify sorting by Name (${description})`, async ({ page }) => {
+        const filters = new ProductsFiltersFragment(page);
+        await page.goto('/');
 
-    const names = await productsFiltersFragment.getProductNames();
-    const sorted = [...names].sort((a, b) => a.localeCompare(b));
+        await filters.selectSortOption('name,asc');
+        const names = await filters.getProductNames();
+        const expected = filters.sortNames(names, 'asc');
+        expect(names).toEqual(expected);
 
-    expect(names).toEqual(sorted);
-});
+        expect(names).toEqual(expected);
+    });
+}
 
-test('Verify sorting by Name (Z - A)', async ({ page }) => {
-    const filters = new ProductsFiltersFragment(page);
-    await page.goto('/');
+const priceSortCases = [
+    { option: 'price,asc', description: 'Low - High' },
+    { option: 'price,desc', description: 'High - Low' },
+];
 
-    await filters.selectSortOption('name,desc');
+for (const { option, description } of priceSortCases) {
+    test(`Verify sorting by Price (${description})`, async ({ page }) => {
+        const filters = new ProductsFiltersFragment(page);
+        await page.goto('/');
 
-    const names = await filters.getProductNames();
-    const sorted = [...names].sort((a, b) => b.localeCompare(a));
+        await filters.selectSortOption('price,desc');
+        const prices = await filters.getProductPrices();
+        const expected = filters.sortPrices(prices, 'desc');
+        expect(prices).toEqual(expected);
 
-    expect(names).toEqual(sorted);
-});
-
-test('Verify sorting by Price (Low - High)', async ({ page }) => {
-    const productsFiltersFragment = new ProductsFiltersFragment(page);
-    await page.goto('/');
-
-    await productsFiltersFragment.selectSortOption('price,asc');
-
-    const prices = await productsFiltersFragment.getProductPrices();
-    const sorted = [...prices].sort((a, b) => a - b);
-
-    expect(prices).toEqual(sorted);
-});
-
-test('Verify sorting by Price (High - Low)', async ({ page }) => {
-    const filters = new ProductsFiltersFragment(page);
-    await page.goto('/');
-
-    await filters.selectSortOption('price,desc');
-
-    const prices = await filters.getProductPrices();
-    const sorted = [...prices].sort((a, b) => b - a);
-
-    expect(prices).toEqual(sorted);
-});
-
+        expect(prices).toEqual(expected);
+    });
+}
 
 test('Verify user can filter products by category: Sander', async ({ page }) => {
     const filters = new ProductsFiltersFragment(page);
     await page.goto('/');
-    await filters.filterByCategory('Sander');
+    await filters.filterByCategory(Category.Sander);
     const names = await filters.getProductNames();
 
     for (const name of names) {
