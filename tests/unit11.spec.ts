@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import 'dotenv/config';
 import { ProductsFiltersFragment, Category } from '../pages/ProductsFiltersFragment';
 import { sortNames, sortPrices } from '../helpers/sortUtils';
+import {HomePage} from "../pages/homePage";
 
 const sortCases = [
     { option: 'name,asc', description: 'A - Z' },
@@ -10,11 +11,11 @@ const sortCases = [
 
 for (const { option, description } of sortCases) {
     test(`Verify sorting by Name (${description})`, async ({ page }) => {
-        const filters = new ProductsFiltersFragment(page);
+        const homePage = new HomePage(page);
         await page.goto('/');
-        await filters.selectSortOption(option);
+        await homePage.filters.selectSortOption(option);
 
-        const names = await filters.getProductNames();
+        const names = await homePage.filters.getProductNames();
 
         const order = option.split(',')[1] as 'asc' | 'desc';
         const expected = sortNames(names, order);
@@ -30,11 +31,11 @@ const priceSortCases = [
 
 for (const { option, description } of priceSortCases) {
     test(`Verify sorting by Price (${description})`, async ({ page }) => {
-        const filters = new ProductsFiltersFragment(page);
+        const homePage = new HomePage(page);
         await page.goto('/');
 
-        await filters.selectSortOption(option);
-        const prices = await filters.getProductPrices();
+        await homePage.filters.selectSortOption(option);
+        const prices = await homePage.filters.getProductPrices();
         const expected = sortPrices(prices, 'desc');
 
 
@@ -43,10 +44,10 @@ for (const { option, description } of priceSortCases) {
 }
 
 test('Verify user can filter products by category: Sander', async ({ page }) => {
-    const filters = new ProductsFiltersFragment(page);
+    const homePage = new HomePage(page);
     await page.goto('/');
-    await filters.filterByCategory(Category.Sander);
-    const names = await filters.getProductNames();
+    await homePage.filters.filterByCategory(Category.Sander);
+    const names = await homePage.filters.getProductNames();
 
     for (const name of names) {
         expect(name.toLowerCase()).toContain('sander');
