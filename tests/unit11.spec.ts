@@ -33,7 +33,7 @@ for (const { option, description } of priceSortCases) {
         const filters = new ProductsFiltersFragment(page);
         await page.goto('/');
 
-        await filters.selectSortOption('price,desc');
+        await filters.selectSortOption(option);
         const prices = await filters.getProductPrices();
         const expected = sortPrices(prices, 'desc');
 

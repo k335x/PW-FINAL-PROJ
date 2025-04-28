@@ -3,7 +3,6 @@ import 'dotenv/config';
 import {LoginPage} from "../pages/loginPage";
 import {HomePage} from "../pages/homePage";
 import {ProductPage} from "../pages/productPage";
-import { ProductsFiltersFragment } from '../pages/ProductsFiltersFragment';
 
 test('[Test1] Verify login with valid credentials', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -18,11 +17,11 @@ test('[Test1] Verify login with valid credentials', async ({ page }) => {
 });
 test('[Test 2] Verify user can view product details', async ({ page }) => {
     const productPage = new ProductPage(page);
-    const productsFiltersFragment = new ProductsFiltersFragment(page);
+    const homePage = new HomePage(page);
 
     await page.goto('/');
 
-    await productsFiltersFragment.clickProductCardByName('Combination Pliers');
+    await homePage.filters.clickProductCardByName('Combination Pliers');
     await expect(page).toHaveURL(/.*product.*/);
 
     await expect(productPage.checkPriceForProducts()).toContainText('14.15')
@@ -31,10 +30,10 @@ test('[Test 2] Verify user can view product details', async ({ page }) => {
 });
 test('[Test 3] Verify user can add product to cart', async ({ page }) => {
     const productPage = new ProductPage(page);
-    const productsFiltersFragment = new ProductsFiltersFragment(page);
+    const homePage = new HomePage(page);
 
     await page.goto('/');
-    await productsFiltersFragment.clickProductCardByName('Slip Joint Pliers');
+    await homePage.filters.clickProductCardByName('Slip Joint Pliers');
     await expect(page).toHaveURL(/.*product.*/);
     await expect(productPage.checkPriceForProducts()).toContainText('9.17');
     await productPage.clickAddToCart();
