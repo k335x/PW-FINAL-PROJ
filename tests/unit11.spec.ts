@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config';
-import { ProductsFiltersFragment, Category } from '../pages/ProductsFiltersFragment';
+import { Category } from '../pages/ProductsFiltersFragment';
 import { sortNames, sortPrices } from '../helpers/sortUtils';
 import {HomePage} from "../pages/homePage";
 
