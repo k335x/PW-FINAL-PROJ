@@ -1,24 +1,14 @@
-import { test, expect } from '@playwright/test';
 import 'dotenv/config';
-import {LoginPage} from "../pages/loginPage";
-import {HomePage} from "../pages/homePage";
-import {ProductPage} from "../pages/productPage";
+import { test, expect } from '../helpers/fixtures';
 
-test('[Test1] Verify login with valid credentials', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    const homePage = new HomePage(page);
-
-    await page.goto('/auth/login');
-    await loginPage.login( process.env.USER_EMAIL!, process.env.USER_PASSWORD!);
+test('[Test1] Verify login with valid credentials', async ({ loggedInPage }) => {
+    const { page, homePage} = loggedInPage;
 
     await expect(page).toHaveURL('/account');
     await expect(homePage.getPageTitleLocator()).toContainText('My account');
     await expect(homePage.getNameInMenuLocator()).toContainText(process.env.USER_NAME!);
 });
-test('[Test 2] Verify user can view product details', async ({ page }) => {
-    const productPage = new ProductPage(page);
-    const homePage = new HomePage(page);
-
+test('[Test 2] Verify user can view product details', async ({ page, homePage, productPage }) => {
     await page.goto('/');
 
     await homePage.filters.clickProductCardByName('Combination Pliers');
@@ -28,11 +18,9 @@ test('[Test 2] Verify user can view product details', async ({ page }) => {
     await productPage.clickAddToFavorites();
     await productPage.clickAddToCart();
 });
-test('[Test 3] Verify user can add product to cart', async ({ page }) => {
-    const productPage = new ProductPage(page);
-    const homePage = new HomePage(page);
-
+test('[Test 3] Verify user can add product to cart', async ({ page, homePage, productPage }) => {
     await page.goto('/');
+
     await homePage.filters.clickProductCardByName('Slip Joint Pliers');
     await expect(page).toHaveURL(/.*product.*/);
     await expect(productPage.checkPriceForProducts()).toContainText('9.17');

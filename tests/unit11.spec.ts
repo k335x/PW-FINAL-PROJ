@@ -1,8 +1,7 @@
-import { test, expect } from '@playwright/test';
 import 'dotenv/config';
 import { Category } from '../pages/ProductsFiltersFragment';
 import { sortNames, sortPrices } from '../helpers/sortUtils';
-import {HomePage} from "../pages/homePage";
+import { test, expect } from '../helpers/fixtures';
 
 const sortCases = [
     { option: 'name,asc', description: 'A - Z' },
@@ -10,8 +9,7 @@ const sortCases = [
 ];
 
 for (const { option, description } of sortCases) {
-    test(`Verify sorting by Name (${description})`, async ({ page }) => {
-        const homePage = new HomePage(page);
+    test(`Verify sorting by Name (${description})`, async ({ page, homePage }) => {
         await page.goto('/');
         await homePage.filters.selectSortOption(option);
 
@@ -30,8 +28,7 @@ const priceSortCases = [
 ];
 
 for (const { option, description } of priceSortCases) {
-    test(`Verify sorting by Price (${description})`, async ({ page }) => {
-        const homePage = new HomePage(page);
+    test(`Verify sorting by Price (${description})`, async ({ page, homePage }) => {
         await page.goto('/');
 
         await homePage.filters.selectSortOption(option);
@@ -43,8 +40,7 @@ for (const { option, description } of priceSortCases) {
     });
 }
 
-test('Verify user can filter products by category: Sander', async ({ page }) => {
-    const homePage = new HomePage(page);
+test('Verify user can filter products by category: Sander', async ({ page, homePage }) => {
     await page.goto('/');
     await homePage.filters.filterByCategory(Category.Sander);
     const names = await homePage.filters.getProductNames();
