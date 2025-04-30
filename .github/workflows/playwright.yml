@@ -23,7 +23,7 @@ jobs:
         USER_EMAIL: ${{ secrets.USER_EMAIL }}
         USER_NAME: ${{ secrets.USER_NAME }}
         USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-        BASE_URL: ${{ secrets.WEB_URL }}
+        BASE_URL: ${{ secrets.BASE_URL }}
         BILLING_ADDRESS_STATE: ${{secrets.BILLING_ADDRESS_STATE}}
         CREDIT_CARD_NUMBER: ${{secrets.CREDIT_CARD_NUMBER}}
         EXPIRATION_DATE: ${{secrets.EXPIRATION_DATE}}
