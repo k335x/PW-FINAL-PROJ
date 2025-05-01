@@ -1,10 +1,10 @@
 import { test, expect } from '../helpers/fixtures';
 import 'dotenv/config';
 
-    test('Product purchase verification', async ({ loggedInPage, productPage, cartPage, checkoutPage, paymentPage }) => {
-        const {page, homePage} = loggedInPage;
+    test('Product purchase verification', async ({ loggedInApp, productPage, cartPage, checkoutPage, paymentPage }) => {
+        const {page, homePage} = loggedInApp;
 
-        await page.waitForTimeout(1000);
+        await expect(page).toHaveURL('/account');
 
         await page.goto('/');
         await homePage.filters.clickProductCardByName('Combination Pliers');
@@ -17,14 +17,14 @@ import 'dotenv/config';
 
         await expect(productPage.getProductInCheckout(name!)).toBeVisible();
 
-        await expect(cartPage.checkPriceForProducts()).toContainText(price!);
-        await expect(cartPage.checkTotalPriceForProducts()).toContainText('$14.15');
+        await expect(cartPage.getProductPriceLocator()).toContainText(price!);
+        await expect(cartPage.getTotalPriceLocator()).toContainText(price!);
 
         await productPage.getProceedToCheckoutButton().click();
 
-        await expect(checkoutPage.checkUserAlreadyLoggedIn()).toContainText(`Hello ${process.env.USER_NAME!}, you are already logged in. You can proceed to checkout.`);
+        await expect(checkoutPage.getUserAlreadyLoggedInMessage()).toContainText(`Hello ${process.env.USER_NAME!}, you are already logged in. You can proceed to checkout.`);
 
-        await checkoutPage.clickToTheButtonProceed().click();
+        await checkoutPage.clickToTheButtonProceed();
 
         await checkoutPage.fillBillingAddress(process.env.BILLING_ADDRESS_STATE!, process.env.BILLING_ADDRESS_POSTCODE!);
 

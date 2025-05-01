@@ -7,16 +7,16 @@ export class CartPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.totalPrice = this.page.locator('[data-test="cart-total"]');
-        this.productsPrice = this.page.locator('[data-test="product-price"]');
+        this.totalPrice = this.page.getByTestId('cart-total');
+        this.productsPrice = this.page.getByTestId('product-price');
 
     }
 
-    checkPriceForProducts() {
+    getProductPriceLocator() {
         return this.productsPrice;
     }
 
-    checkTotalPriceForProducts() {
+    getTotalPriceLocator() {
         return this.totalPrice;
     }
 }

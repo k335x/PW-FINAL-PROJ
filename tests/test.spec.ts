@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { test, expect } from '../helpers/fixtures';
 
-test('[Test1] Verify login with valid credentials', async ({ loggedInPage }) => {
-    const { page, homePage} = loggedInPage;
+test('[Test1] Verify login with valid credentials', async ({ loggedInApp }) => {
+    const { page, homePage} = loggedInApp;
 
     await expect(page).toHaveURL('/account');
     await expect(homePage.getPageTitleLocator()).toContainText('My account');

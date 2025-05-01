@@ -18,7 +18,7 @@ export class CheckoutPage {
     }
 
     clickToTheButtonProceed() {
-        return this.buttonProceed;
+        return this.buttonProceed.click();
     }
 
 
@@ -32,7 +32,7 @@ export class CheckoutPage {
         await this.proceedButton.click();
     }
 
-    checkUserAlreadyLoggedIn() {
+    getUserAlreadyLoggedInMessage() {
         return this.alreadyLoggedInMessage;
     }
 }
