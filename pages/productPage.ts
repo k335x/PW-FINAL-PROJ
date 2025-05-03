@@ -3,6 +3,7 @@ import { Locator, Page } from "@playwright/test";
 export class ProductPage {
     page: Page;
     productPrice: Locator;
+    productName: Locator;
     buttonAddToFavorites: Locator;
     buttonAddToCart: Locator;
     cartQuantity: Locator;
@@ -22,6 +23,7 @@ export class ProductPage {
         this.alertMessage = this.page.getByRole('alert', { name: 'Product added to shopping' });
         this.alertLocator = this.page.locator('#alert');
         this.navCartLink = page.locator('[data-test="nav-cart"]');
+        this.productName = this.page.locator('[data-test="product-name"]')
     }
 
     checkPriceForProducts() {
@@ -62,5 +64,13 @@ export class ProductPage {
 
     async goToCart(){
         await this.navCartLink.click();
+    }
+
+    async getFirstProductName() {
+        return await this.productName.first().textContent();
+    }
+
+    async getFirstProductPrice() {
+       return await this.productPrice.first().textContent();
     }
 }
