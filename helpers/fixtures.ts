@@ -33,13 +33,10 @@ export const test = base.extend<Fixtures>({
         await use(new ProductPage(page));
     },
 
-    loggedInApp: async ({ page }, use) => {
-        const loginPage = new LoginPage(page);
+    loggedInApp: async ({ browser }, use) => {
+        const context = await browser.newContext({ storageState: 'auth/user.json' });
+        const page = await context.newPage();
         const homePage = new HomePage(page);
-
-        await page.goto('/auth/login');
-        await loginPage.login(process.env.USER_EMAIL!, process.env.USER_PASSWORD!);
-
         await use({ page, homePage });
     },
 

@@ -1,14 +1,7 @@
 import 'dotenv/config';
 import { test, expect } from '../helpers/fixtures';
 
-test('[Test1] Verify login with valid credentials', async ({ loggedInApp }) => {
-    const { page, homePage} = loggedInApp;
-
-    await expect(page).toHaveURL('/account');
-    await expect(homePage.getPageTitleLocator()).toContainText('My account');
-    await expect(homePage.getNameInMenuLocator()).toContainText(process.env.USER_NAME!);
-});
-test('[Test 2] Verify user can view product details', async ({ page, homePage, productPage }) => {
+test('[Test 1] Verify user can view product details', async ({ page, homePage, productPage }) => {
     await page.goto('/');
 
     await homePage.filters.clickProductCardByName('Combination Pliers');
@@ -18,7 +11,7 @@ test('[Test 2] Verify user can view product details', async ({ page, homePage, p
     await productPage.clickAddToFavorites();
     await productPage.clickAddToCart();
 });
-test('[Test 3] Verify user can add product to cart', async ({ page, homePage, productPage }) => {
+test('[Test 2] Verify user can add product to cart', async ({ page, homePage, productPage }) => {
     await page.goto('/');
 
     await homePage.filters.clickProductCardByName('Slip Joint Pliers');

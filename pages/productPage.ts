@@ -23,7 +23,7 @@ export class ProductPage {
         this.alertMessage = this.page.getByRole('alert', { name: 'Product added to shopping' });
         this.alertLocator = this.page.locator('#alert');
         this.navCartLink = page.locator('[data-test="nav-cart"]');
-        this.productName = this.page.locator('[data-test="product-name"]')
+        this.productName = this.page.getByTestId('product-name');
     }
 
     checkPriceForProducts() {
@@ -71,6 +71,6 @@ export class ProductPage {
     }
 
     async getFirstProductPrice() {
-       return await this.productPrice.first().textContent();
+        return await this.productPrice.first().textContent();
     }
 }
