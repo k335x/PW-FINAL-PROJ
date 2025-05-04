@@ -66,11 +66,11 @@ export class ProductPage {
         await this.navCartLink.click();
     }
 
-    async getFirstProductName() {
+    async getFirstProductName(): Promise<string | null> {
         return await this.productName.first().textContent();
     }
 
-    async getFirstProductPrice() {
+    async getFirstProductPrice(): Promise<string | null> {
         return await this.productPrice.first().textContent();
     }
 }

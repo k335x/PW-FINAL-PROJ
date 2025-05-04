@@ -49,7 +49,7 @@ export class HomePage {
         });
     }
 
-    async getProductCardCount(){
+    async getProductCardCount(): Promise<number> {
         return this.productCards.count();
     }
 }
