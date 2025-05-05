@@ -1,4 +1,4 @@
-import { Page, test as base } from '@playwright/test';
+import {Page, PlaywrightTestArgs, test as base} from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 import { HomePage } from '../pages/homePage';
 import { ProductPage } from '../pages/productPage';
@@ -7,6 +7,7 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 import { PaymentPage } from '../pages/PaymentPage';
 import path from 'node:path';
 import 'dotenv/config';
+import {ProductsFiltersFragment} from "../pages/ProductsFiltersFragment";
 
 type Fixtures = {
     loginPage: LoginPage;
@@ -15,6 +16,7 @@ type Fixtures = {
     cartPage: CartPage;
     checkoutPage: CheckoutPage;
     paymentPage: PaymentPage;
+    productsFiltersFragment: ProductsFiltersFragment;
 };
 
 type LoggedInFixtures = Fixtures & {
@@ -47,6 +49,10 @@ export const test = base.extend<Fixtures>({
 
     paymentPage: async ({ page }, use) => {
         await use(new PaymentPage(page));
+    },
+
+    productsFiltersFragment: async ({ page }, use) => {
+        await use(new ProductsFiltersFragment(page));
     },
 });
 

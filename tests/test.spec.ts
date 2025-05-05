@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { test, expect } from '../helpers/fixtures';
 
 test('[Test 1] Verify user can view product details', async ({ page, homePage, productPage }) => {
-    await page.goto('/');
+    await homePage.navigateTo();
 
     await homePage.filters.clickProductCardByName('Combination Pliers');
     await expect(page).toHaveURL(/.*product.*/);
@@ -12,7 +12,7 @@ test('[Test 1] Verify user can view product details', async ({ page, homePage, p
     await productPage.clickAddToCart();
 });
 test('[Test 2] Verify user can add product to cart', async ({ page, homePage, productPage }) => {
-    await page.goto('/');
+    await homePage.navigateTo();
 
     await homePage.filters.clickProductCardByName('Slip Joint Pliers');
     await expect(page).toHaveURL(/.*product.*/);

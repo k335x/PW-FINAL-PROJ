@@ -1,20 +1,16 @@
 import { Locator, Page } from "@playwright/test";
 import {ProductsFiltersFragment} from "./ProductsFiltersFragment";
-import path from "node:path";
-
 
 export class HomePage {
     page: Page;
     pageTitleName: Locator;
     nameInMenu: Locator;
     filters: ProductsFiltersFragment;
-    productCards: Locator;
     constructor(page:Page) {
         this.page = page;
         this.pageTitleName =  this.page.getByTestId('page-title');
         this.nameInMenu =  this.page.getByTestId('nav-menu');
         this.filters = new ProductsFiltersFragment(page);
-        this.productCards = this.page.locator('[data-test="product-name"]');
     }
 
     async navigateTo() {
@@ -47,9 +43,5 @@ export class HomePage {
                 body: JSON.stringify(json),
             });
         });
-    }
-
-    async getProductCardCount(): Promise<number> {
-        return this.productCards.count();
     }
 }

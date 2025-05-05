@@ -1,10 +1,6 @@
-import {test, expect} from "../helpers/fixtures";
-import {LoginPage} from "../pages/loginPage";
-import {HomePage} from "../pages/homePage";
+import { test as test, expect } from '../helpers/fixtures';
 
-test('Login', async ({page}) => {
-    const loginPage = new LoginPage(page);
-    const  homePage = new HomePage(page);
+test('Login', async ({ homePage, loginPage, page}) => {
 
     await page.goto('/auth/login');
     await loginPage.login(process.env.USER_EMAIL!, process.env.USER_PASSWORD!);
