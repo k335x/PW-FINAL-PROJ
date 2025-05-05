@@ -7,6 +7,5 @@ test('Mock test', async ({ page }) => {
     await homePage.mockProductsResponse(20);
     await homePage.navigateTo();
 
-    const actualCount = await homePage.getProductCardCount();
-    expect(actualCount).toBe(20);
+    await expect(homePage.productCards).toHaveCount(20);
 });

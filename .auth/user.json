@@ -1,33 +1,33 @@
 {
   "cookies": [
     {
-      "name": "cf_clearance",
-      "value": "hpAko40gMlVTbgUIgABK4YWqWPFKKdenIWRVcM20V0o-1746381137-1.2.1.1-rcyxs7FiktORbSB06S3ROstfQB9t66ikxIs6gkQwhuTpJnS.7QPg.KTCH.8foB_psyLKYCMMaF8AauCEFPTGIq8BF8zOxVcP.D6Coia6DwEk1aOCb9HAq60OTYXbHTRDY6vv6dBJ51emA7XOGwa5F05CHBsSboDtBDLAW9ZN.FxMfmYY8LkxHygx5T_bvJuV2eJXpw.PoiwEZjx_4aDC9u38aN8fyRlnuQD4RzRSCtiAlcZgUkwsi99TpUIN_F0hh7nxgCsoXRUBTAccRqlFOIPB4AwdPyBFy.yhCX84wJRHw9DXUaC0n8grCeHyZiibu30dAr8RRP.h.Y9kczk6zZ9Zndb60qISleGZfpkrcTY",
-      "domain": ".practicesoftwaretesting.com",
-      "path": "/",
-      "expires": 1777917137,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
       "name": "_ga",
-      "value": "GA1.1.961344131.1746381132",
+      "value": "GA1.1.1382386521.1746427567",
       "domain": ".practicesoftwaretesting.com",
       "path": "/",
-      "expires": 1780941159,
+      "expires": 1780987568.166725,
       "httpOnly": false,
       "secure": false,
-      "sameSite": "None"
+      "sameSite": "Lax"
     },
     {
       "name": "_ga_0BJFXRKTYC",
-      "value": "GS2.1.s1746381132$o1$g1$t1746381159$j0$l0$h0",
+      "value": "GS2.1.s1746427567$o1$g1$t1746427568$j0$l0$h0",
       "domain": ".practicesoftwaretesting.com",
       "path": "/",
-      "expires": 1780941159,
+      "expires": 1780987568.182368,
       "httpOnly": false,
       "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cf_clearance",
+      "value": "bHjlbibOpDAcYv2.59hvXgA2npKXus7rSvrcI.znsKk-1746427568-1.2.1.1-ZergeaFIGOfVTko3ANpp3wHLQVDM19L58H_MaAIsHJAbKSotH7S_LwWdD4bVG7Q82A6CTdbiB_pimmCBqJYci6oq_4_CrNQVnMlkNdRu2MzS.BT33JGWBf6uT8iFnsIsuxZoB9Kmk4tmwtniZCfF3XkCFGpA0_Y7Rq9mJf1AUp_ZL05EiKSleCYkfH0duL.0.rWpQlDe5rVOKdcZSFMxUNiokBABk_1VXawq0yEhSiFW0nNNtaisHEQu0YUdmwfOkfopYcAjzzCnF_lkQ0hi4ozhr5SeWdCYpaVWUor61Rvbb5iwSTLMSR_Xs6jmNmVIfXkAc_zKU2l1yo73ubUhvmgNg_KdC82FPLlbK.XHO6o",
+      "domain": ".practicesoftwaretesting.com",
+      "path": "/",
+      "expires": 1777963568.515261,
+      "httpOnly": true,
+      "secure": true,
       "sameSite": "None"
     }
   ],
@@ -37,7 +37,7 @@
       "localStorage": [
         {
           "name": "auth-token",
-          "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaS5wcmFjdGljZXNvZnR3YXJldGVzdGluZy5jb20vdXNlcnMvbG9naW4iLCJpYXQiOjE3NDYzODExNTksImV4cCI6MTc0NjM4MTQ1OSwibmJmIjoxNzQ2MzgxMTU5LCJqdGkiOiJ3YUVBOG9XR2dKUUZTQllkIiwic3ViIjoiMDFKVEUzVkhKWFRTTjlXQUpOR0U1VzBZQVQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6InVzZXIifQ.VwMfNvd7WASS-oupaodOAvHbqq8z8a2X3WCf3fGRdzE"
+          "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaS5wcmFjdGljZXNvZnR3YXJldGVzdGluZy5jb20vdXNlcnMvbG9naW4iLCJpYXQiOjE3NDY0Mjc1NjgsImV4cCI6MTc0NjQyNzg2OCwibmJmIjoxNzQ2NDI3NTY4LCJqdGkiOiJRMFRjWnhPMWJEWjRIUjRHIiwic3ViIjoiMDFKVEZHRlFKOEdFVEs4N0FFMVlIQTJGUUYiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3Iiwicm9sZSI6InVzZXIifQ.V5pEiMDQpW2g181ZwcZMuUCVWIrZIAKYKOkMPgHfK0Y"
         }
       ]
     }

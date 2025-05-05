@@ -1,8 +1,8 @@
-import { test, expect } from '../helpers/fixtures';
+import { loggedInTest as test, expect } from '../helpers/fixtures';
 import 'dotenv/config';
 
-    test('Product purchase verification', async ({ loggedInApp, productPage, cartPage, checkoutPage, paymentPage }) => {
-        const {page, homePage} = loggedInApp;
+test('Product purchase verification', async ({ loggedInApp, productPage, cartPage, checkoutPage, paymentPage}) => {
+        const { homePage } = loggedInApp;
 
         await homePage.navigateTo();
         await homePage.filters.clickProductCardByName('Combination Pliers');

@@ -1,23 +1,27 @@
-import {Page, test as base} from '@playwright/test';
+import { Page, test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 import { HomePage } from '../pages/homePage';
 import { ProductPage } from '../pages/productPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
-import { PaymentPage } from  '../pages/PaymentPage';
+import { PaymentPage } from '../pages/PaymentPage';
+import path from 'node:path';
 import 'dotenv/config';
 
 type Fixtures = {
     loginPage: LoginPage;
     homePage: HomePage;
     productPage: ProductPage;
-    loggedInApp: {
-        page: Page;
-        homePage: HomePage;
-    }
     cartPage: CartPage;
     checkoutPage: CheckoutPage;
     paymentPage: PaymentPage;
+};
+
+type LoggedInFixtures = Fixtures & {
+    loggedInApp: {
+        page: Page;
+        homePage: HomePage;
+    };
 };
 
 export const test = base.extend<Fixtures>({
@@ -33,13 +37,6 @@ export const test = base.extend<Fixtures>({
         await use(new ProductPage(page));
     },
 
-    loggedInApp: async ({ browser }, use) => {
-        const context = await browser.newContext({ storageState: 'auth/user.json' });
-        const page = await context.newPage();
-        const homePage = new HomePage(page);
-        await use({ page, homePage });
-    },
-
     cartPage: async ({ page }, use) => {
         await use(new CartPage(page));
     },
@@ -49,8 +46,42 @@ export const test = base.extend<Fixtures>({
     },
 
     paymentPage: async ({ page }, use) => {
-        await  use(new PaymentPage(page));
-    }
+        await use(new PaymentPage(page));
+    },
+});
+
+export const loggedInTest = base.extend<LoggedInFixtures>({
+    loggedInApp: async ({ browser }, use) => {
+        const context = await browser.newContext({storageState: path.join(process.cwd(), 'auth', 'user.json'),});
+        const page = await context.newPage();
+        const homePage = new HomePage(page);
+        await use({ page, homePage });
+        await context.close();
+    },
+
+    loginPage: async ({ loggedInApp }, use) => {
+        await use(new LoginPage(loggedInApp.page));
+    },
+
+    homePage: async ({ loggedInApp }, use) => {
+        await use(new HomePage(loggedInApp.page));
+    },
+
+    productPage: async ({ loggedInApp }, use) => {
+        await use(new ProductPage(loggedInApp.page));
+    },
+
+    cartPage: async ({ loggedInApp }, use) => {
+        await use(new CartPage(loggedInApp.page));
+    },
+
+    checkoutPage: async ({ loggedInApp }, use) => {
+        await use(new CheckoutPage(loggedInApp.page));
+    },
+
+    paymentPage: async ({ loggedInApp }, use) => {
+        await use(new PaymentPage(loggedInApp.page));
+    },
 });
 
 export { expect } from '@playwright/test';
