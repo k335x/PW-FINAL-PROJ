@@ -9,16 +9,29 @@ const sortCases = [
 ];
 
 for (const { option, description } of sortCases) {
-    test(`Verify sorting by Name (${description})`, async ({ page, homePage }) => {
-        await page.goto('/');
-        await homePage.filters.selectSortOption(option);
+    test(`Verify sorting by Name (${description})`, async ({ homePage }) => {
 
-        const names = await homePage.filters.getProductNames();
+        await test.step('Navigate to main page', async () => {
+            await homePage.navigateTo();
+        });
 
-        const order = option.split(',')[1] as 'asc' | 'desc';
-        const expected = sortNames(names, order);
+        await test.step(`Select sort option "${description}"`, async () => {
+            await homePage.filters.selectSortOption(option);
+        });
 
-        expect(names).toEqual(expected);
+
+        const names = await test.step('Get all product names', async () => {
+            return await homePage.filters.getProductNames();
+        });
+
+        const expected = await test.step('Sort names locally for comparison', async () => {
+            const order = option.split(',')[1] as 'asc' | 'desc';
+            return sortNames(names, order);
+        });
+
+        await test.step('Compare UI names with expected sorted names', async () => {
+            expect(names).toEqual(expected);
+        });
     });
 }
 
@@ -29,23 +42,47 @@ const priceSortCases = [
 
 for (const { option, description } of priceSortCases) {
     test(`Verify sorting by Price (${description})`, async ({ page, homePage }) => {
-        await page.goto('/');
 
-        await homePage.filters.selectSortOption(option);
-        const prices = await homePage.filters.getProductPrices();
-        const expected = sortPrices(prices, 'desc');
+        await test.step('Navigate to main page', async () => {
+            await homePage.navigateTo();
+        });
 
+        await test.step(`Select sort option "${description}"`, async () => {
+            await homePage.filters.selectSortOption(option);
+        });
 
-        expect(prices).toEqual(expected);
+        const prices = await test.step('Get all product prices', async () => {
+            return await homePage.filters.getProductPrices();
+        });
+
+        const expected = await test.step('Sort prices locally for comparison', async () => {
+            const order = option.split(',')[1] as 'asc' | 'desc';
+            return sortPrices(prices, order);
+        });
+
+        await test.step('Compare UI prices with expected sorted prices', async () => {
+            expect(prices).toEqual(expected);
+        });
     });
 }
 
 test('Verify user can filter products by category: Sander', async ({ page, homePage }) => {
-    await page.goto('/');
-    await homePage.filters.filterByCategory(Category.Sander);
-    const names = await homePage.filters.getProductNames();
 
-    for (const name of names) {
-        expect(name.toLowerCase()).toContain('sander');
-    }
+    await test.step('Navigate to main page', async () => {
+        await homePage.navigateTo();
+    });
+
+    await test.step('Filter products by category: Sander', async () => {
+        await homePage.filters.filterByCategory(Category.Sander);
+    });
+
+    const names = await test.step('Get all product names after filtering', async () => {
+        return await homePage.filters.getProductNames();
+    });
+
+    await test.step('Verify all names contain "sander"', async () => {
+        for (const name of names) {
+            expect(name.toLowerCase()).toContain('sander');
+        }
+    });
 });
