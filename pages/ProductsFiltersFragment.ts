@@ -16,7 +16,7 @@ export class ProductsFiltersFragment {
     constructor(page: Page) {
         this.page = page;
         this.sortDropdown = page.getByTestId('sort');
-        this.productTitles = page.getByTestId('product-name');
+        this.productTitles = this.page.locator('[data-test="product-name"]');
         this.productPrices = page.getByTestId('unit-price');
     }
 
@@ -39,6 +39,10 @@ export class ProductsFiltersFragment {
 
     async getProductNames(): Promise<string[]> {
         return this.productTitles.allInnerTexts();
+    }
+
+    async getProductCardCount(): Promise<number> {
+        return this.productTitles.count();
     }
 
     async clickProductCardByName(productName: string) {

@@ -17,4 +17,8 @@ export class LoginPage {
         await this.password.fill(password);
         await this.submitButton.click();
     }
+
+    async navigateToLoginPage() {
+        await this.page.goto('/auth/login');
+    }
 }
