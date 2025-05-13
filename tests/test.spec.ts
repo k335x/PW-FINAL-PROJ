@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { test, expect } from '../helpers/fixtures';
 
-test('[Test 1] Verify user can view product details', async ({ page, homePage, productPage }) => {
+test('[Test 1] Verify user can view product details', {tag: '@smoke'}, async ({ page, homePage, productPage }) => {
 
     await test.step('Navigate to main page', async () => {
         await homePage.navigateTo();
@@ -24,7 +24,7 @@ test('[Test 1] Verify user can view product details', async ({ page, homePage, p
         await productPage.clickAddToCart();
     });
 });
-test('[Test 2] Verify user can add product to cart', async ({ page, homePage, productPage }) => {
+test('[Test 2] Verify user can add product to cart', {tag: '@smoke'}, async ({ page, homePage, productPage }) => {
 
     await test.step('Navigate to main page', async () => {
         await homePage.navigateTo();
@@ -55,7 +55,7 @@ test('[Test 2] Verify user can add product to cart', async ({ page, homePage, pr
         await productPage.goToCart();
     });
 
-    await test.step('Checking cart ', async () => {
+    await test.step('Checking cart', async () => {
         await expect(page).toHaveURL(/.*checkout.*/);
         await expect(productPage.getProductQuantityLocator()).toHaveValue('1');
         await expect(productPage.getProductInCheckout('Slip Joint Pliers')).toBeVisible();

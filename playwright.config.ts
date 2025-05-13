@@ -54,6 +54,10 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'smoke',
+      grep: /@smoke/,
+    },
+    {
       name: 'auth',
       testMatch: /.*auth\.login\.spec\.ts/,
     },

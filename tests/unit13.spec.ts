@@ -1,7 +1,7 @@
 import { loggedInTest as test, expect } from '../helpers/fixtures';
 import 'dotenv/config';
 
-test('Product purchase verification', async ({ loggedInApp, productPage, cartPage, checkoutPage, paymentPage}) => {
+test('Product purchase verification', {tag: '@smoke'}, async ({ loggedInApp, productPage, cartPage, checkoutPage, paymentPage}) => {
         const { homePage } = loggedInApp;
 
         let name;

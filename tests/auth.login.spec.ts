@@ -1,7 +1,6 @@
 import { test as test, expect } from '../helpers/fixtures';
 
-test('Login', async ({ homePage, loginPage, page}) => {
-
+test('Login', {tag: '@smoke'}, async ({ homePage, loginPage, page}) => {
     await test.step('Navigate to login page', async () => {
         await loginPage.navigateToLoginPage();
     });
