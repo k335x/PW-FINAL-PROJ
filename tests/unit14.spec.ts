@@ -2,7 +2,7 @@ import {ProductsFiltersFragment} from "../pages/ProductsFiltersFragment";
 import { test, expect } from '../helpers/fixtures';
 
 
-test('Mock test', async ({  homePage, page }) => {
+test('Mock test', {tag: '@smoke'}, async ({  homePage, page }) => {
     const productsFiltersFragment = new ProductsFiltersFragment(page);
 
     await test.step('Mock API response', async () => {

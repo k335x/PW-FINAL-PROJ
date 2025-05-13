@@ -1,4 +1,4 @@
-import {Page, PlaywrightTestArgs, test as base} from '@playwright/test';
+import {Page, test as base} from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 import { HomePage } from '../pages/homePage';
 import { ProductPage } from '../pages/productPage';

@@ -9,7 +9,7 @@ const sortCases = [
 ];
 
 for (const { option, description } of sortCases) {
-    test(`Verify sorting by Name (${description})`, async ({ homePage }) => {
+    test(`Verify sorting by Name (${description})`, {tag: '@smoke'}, async ({ homePage }) => {
 
         await test.step('Navigate to main page', async () => {
             await homePage.navigateTo();
@@ -41,7 +41,7 @@ const priceSortCases = [
 ];
 
 for (const { option, description } of priceSortCases) {
-    test(`Verify sorting by Price (${description})`, async ({ page, homePage }) => {
+    test(`Verify sorting by Price (${description})`, {tag: '@smoke'}, async ({ homePage }) => {
 
         await test.step('Navigate to main page', async () => {
             await homePage.navigateTo();
@@ -66,7 +66,7 @@ for (const { option, description } of priceSortCases) {
     });
 }
 
-test('Verify user can filter products by category: Sander', async ({ page, homePage }) => {
+test('Verify user can filter products by category: Sander', {tag: '@smoke'}, async ({ homePage }) => {
 
     await test.step('Navigate to main page', async () => {
         await homePage.navigateTo();
